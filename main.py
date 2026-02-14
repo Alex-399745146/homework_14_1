@@ -1,9 +1,9 @@
 # main.py
 """Основной исполнительный файл"""
 
-from src.my_homework import Category, Product
+from src.models import Category, Product
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     # Создание объектов с вводом данных в атрибуты путем позиционных аргументов.
     product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
     product2 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
@@ -31,34 +31,35 @@ if __name__ == "__main__":
     print(product4.price)
     print(product4.quantity)
 
+    # Создаем объекты категория.
     category1 = Category(
         "Смартфоны",
         """Смартфоны, как средство не только коммуникации, но и получения
-        "дополнительных функций для удобства жизни""",
+          дополнительных функций для удобства жизни""",
         [product1, product2, product3],
     )
 
     category2 = Category(
         "Телевизоры",
         """Современный телевизор, который позволяет наслаждаться просмотром,
-        станет вашим другом и помощником""",
+          станет вашим другом и помощником""",
         [product4],
     )
 
     print("-----------------------------")
     # print(category1.name == "Смартфоны")  немного поправил выданный файл к чему это сравнение
-    print(category1.name)
-    print(category1.description)
+    print("Группа:", category1.name)
+    print("Описание:", category1.description)
     print("Кол-во изделий:", len(category1.products))
-    print("Счётчик категорий:", category1.category_count)
-    print("Счётчик изделий:", category1.product_count)
+    print("Всего категорий:", category1.category_count)
+    print("Всего изделий:", category1.product_count)
     print("-----------------------------")
-    print(category2.name)
-    print(category2.description)
+    print("Группа:", category2.name)
+    print("Описание:", category2.description)
     print("Кол-во изделий:", len(category2.products))
     # print(category2.products) немного поправил выданный файл похоже в нем ошибка
-    print("Счётчик категорий:", category2.category_count)
-    print("Счётчик изделий:", category2.product_count)
+    print("Всего категорий:", category2.category_count)
+    print("Всего изделий:", category2.product_count)
     print("-----------------------------")
-    print("Всего групп:", Category.category_count)
-    print("Всего изделий:", Category.product_count)
+    print("Всего в магазине групп товаров:", Category.category_count)
+    print("Всего позиций:", Category.product_count)

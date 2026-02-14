@@ -1,5 +1,5 @@
-# my_homework.py
-"""Модуль содержит описание двух основных классов"""
+# models.py
+"""Модуль содержит описание классов объектов"""
 
 
 # Task_1
@@ -21,10 +21,12 @@ class Product:
 
 
 class Category:
+    """Создание групп товаров"""
+
+    # Атрибуты класса.
     category_count: int = 0
     product_count: int = 0
-
-    """ Создание групп товаров """
+    # Описание типов данных в классе.
     name: str
     description: str
     products: list
@@ -34,5 +36,6 @@ class Category:
         self.description = description
         self.products = products
 
+        # Task_2
         Category.category_count += 1
         Category.product_count += len(self.products)
