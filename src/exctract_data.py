@@ -36,21 +36,23 @@ if __name__ == "__main__":  # pragma: no cover
     path_file_json = os.path.join(project_root, "data", "products.json")
 
     data_json = get_info_file_json(path_file_json)
-
     objects = get_class_objects(data_json)
-    for obj in objects:
-        if isinstance(obj, Product):
-            print("\nТовар:")
-            print(f"Название: {obj.name}")
-            print(f"Описание: {obj.description}")
-            print(f"Цена: {obj.price}")
-            print(f"Количество: {obj.quantity}")
-        elif isinstance(obj, Category):
-            print("\nКатегория:")
-            print(f"Название: {obj.name}")
-            print(f"Описание: {obj.description}")
-            # products есть у Category (список продуктов)
-            print(f"Товары в категории: {len(obj.products)} шт.")
-            # Можно вывести названия продуктов:
-            for product in obj.products:
-                print(f"  - {product['name']}")
+
+    # print(type(data_json))
+    print(data_json)
+    # for obj in objects:
+    #     if isinstance(obj, Product):
+    #         print("\nТовар:")
+    #         print(f"Название: {obj.name}")
+    #         print(f"Описание: {obj.description}")
+    #         print(f"Цена: {obj.price}")
+    #         print(f"Количество: {obj.quantity}")
+    #     elif isinstance(obj, Category):
+    #         print("\nКатегория:")
+    #         print(f"Название: {obj.name}")
+    #         print(f"Описание: {obj.description}")
+    #         # products есть у Category (список продуктов)
+    #         print(f"Товары в категории: {len(obj.products)} шт.")
+    #         # Можно вывести названия продуктов:
+    #         for product in obj.products:
+    #             print(f"  - {product['name']}")
