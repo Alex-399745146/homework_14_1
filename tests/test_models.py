@@ -4,7 +4,7 @@
 from src.models import Category, Product
 
 
-def test_init_product(fix_diamond_product: Product) -> None:
+def test_init_product(fix_diamond_product: Product, fixture_init_prod: dict) -> None:
     """Проверка создания объектов класса Product"""
     assert fix_diamond_product.name == "diamond"
     assert fix_diamond_product.description == "Star of Africa - 621.35 grams"
@@ -15,6 +15,13 @@ def test_init_product(fix_diamond_product: Product) -> None:
     assert isinstance(fix_diamond_product.description, str)
     assert isinstance(fix_diamond_product.price, float)
     assert isinstance(fix_diamond_product.quantity, int)
+
+    test_obj_prod = Product.new_product(fixture_init_prod)
+
+    assert test_obj_prod.name == "Toshiba"
+    assert test_obj_prod.description == "Микровалновая печь для дома"
+    assert test_obj_prod.price == 1000.0
+    assert test_obj_prod.quantity == 5
 
 
 def test_init_category(fixture_category: Category, fix_diamond_product: Product) -> None:

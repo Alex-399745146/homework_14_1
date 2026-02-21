@@ -11,6 +11,11 @@ from src.exctract_data import get_info_file_json
 from src.models import Category, Product
 
 
+@pytest.fixture
+def fixture_init_prod() -> dict:
+    return {"name": "Toshiba", "description": "Микровалновая печь для дома", "price": 1000, "quantity": 5}
+
+
 @pytest.fixture(autouse=True)
 def reset_category_count() -> None:
     """Сброс счётчика категорий перед каждым тестом"""

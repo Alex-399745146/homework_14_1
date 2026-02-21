@@ -86,7 +86,7 @@ class Category:
         Category.product_count += product.quantity
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     product1 = Product('Philips 55" QLED 4K', "Фоновая подсветка", 123000.0, 7)
 
     category = Category(
