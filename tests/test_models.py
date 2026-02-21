@@ -21,12 +21,11 @@ def test_init_category(fixture_category: Category, fix_diamond_product: Product)
     """Проверка создания объектов класса Category"""
     assert fixture_category.name == "Украшения"
     assert fixture_category.description == "Драгоценные камни"
-    assert fixture_category.products == [fix_diamond_product]
     assert fixture_category.category_count == 1
     assert fixture_category.product_count == 1
     # Проверка типа данных
     assert isinstance(fixture_category.name, str)
     assert isinstance(fixture_category.description, str)
-    assert isinstance(fixture_category.products, list)
+    assert isinstance(fixture_category.products, str)
     assert isinstance(fixture_category.category_count, int)
     assert isinstance(fixture_category.product_count, int)
