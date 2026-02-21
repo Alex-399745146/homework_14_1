@@ -38,5 +38,4 @@ def test_get_class_objects(fix_data_json: Any) -> None:
     assert category_tv is not None, 'Категория "Телевизоры" не найдена в списке'
     assert category_tv.name == "Телевизоры"
     assert "телевизор" in category_tv.description.lower()
-    assert isinstance(category_tv.products, list)
     assert len(category_tv.products) > 0

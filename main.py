@@ -3,63 +3,48 @@
 
 from src.models import Category, Product
 
-if __name__ == "__main__":  # pragma: no cover
-    # Создание объектов с вводом данных в атрибуты путем позиционных аргументов.
-    product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
-    product2 = Product("Iphone 15", "512GB, Gray space", 210000.0, 8)
-    product3 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14)
-    product4 = Product('Philips 55" QLED 4K', "Фоновая подсветка", 123000.0, 7)
+if __name__ == "__main__":
+    product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180_000.0, 5)
+    product2 = Product("Iphone 15", "512GB, Gray space", 210_000.0, 8)
+    product3 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31_000.0, 14)
 
-    # Вывод в данных через атрибут объекта-поиск данных по принципу MRO.
-    print(product1.name)
-    print(product1.description)
-    print(product1.price)
-    print(product1.quantity)
-    print("-----------------------------")
-    print(product2.name)
-    print(product2.description)
-    print(product2.price)
-    print(product2.quantity)
-    print("-----------------------------")
-    print(product3.name)
-    print(product3.description)
-    print(product3.price)
-    print(product3.quantity)
-    print("-----------------------------")
-    print(product4.name)
-    print(product4.description)
-    print(product4.price)
-    print(product4.quantity)
-
-    # Создаем объекты категория.
     category1 = Category(
         "Смартфоны",
-        """Смартфоны, как средство не только коммуникации, но и получения
-          дополнительных функций для удобства жизни""",
+        "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни",
         [product1, product2, product3],
     )
 
-    category2 = Category(
-        "Телевизоры",
-        """Современный телевизор, который позволяет наслаждаться просмотром,
-          станет вашим другом и помощником""",
-        [product4],
+    print(category1.products)
+    print(category1.product_count)
+
+    product4 = Product('55" QLED 4K', "Фоновая подсветка", 123_000.0, 7)
+    category1.add_product(product4)
+
+    print(category1.products)
+    print(category1.product_count)
+
+    new_product = Product.new_product(
+        {
+            "name": "Samsung Galaxy S23 Ultra",
+            "description": "256GB, Серый цвет, 200MP камера",
+            "price": 180000.0,
+            "quantity": 5,
+        },
     )
 
-    print("-----------------------------")
-    # print(category1.name == "Смартфоны")  немного поправил выданный файл к чему это сравнение
-    print("Группа:", category1.name)
-    print("Описание:", category1.description)
-    print("Кол-во изделий:", len(category1.products))
-    print("Всего категорий:", category1.category_count)
-    print("Всего изделий:", category1.product_count)
-    print("-----------------------------")
-    print("Группа:", category2.name)
-    print("Описание:", category2.description)
-    print("Кол-во изделий:", len(category2.products))
-    # print(category2.products) немного поправил выданный файл похоже в нем ошибка
-    print("Всего категорий:", category2.category_count)
-    print("Всего изделий:", category2.product_count)
-    print("-----------------------------")
-    print("Всего в магазине групп товаров:", Category.category_count)
-    print("Всего позиций:", Category.product_count)
+    print(new_product.name)
+    print(new_product.description)
+    print(new_product.price)
+    print(new_product.quantity)
+
+    new_product.price = 800
+
+    print(new_product.price)
+
+    new_product.price = -100
+
+    print(new_product.price)
+
+    new_product.price = 0
+
+    print(new_product.price)
