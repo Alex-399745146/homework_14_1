@@ -66,8 +66,8 @@ if __name__ == '__main__':
 
     print(str(category1), '\n')
 
-    print(category1.products)
+    print(category1.products, '\n')
 
-    # print(product1 + product2)
-    # print(product1 + product3)
-    # print(product2 + product3)
+    print(product1 + product2)
+    print(product1 + product3)
+    print(product2 + product3)
