@@ -18,6 +18,9 @@ class Product:
         self.__price = price
         self.quantity = quantity
 
+    def __str__(self):
+        return f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт."
+
     @classmethod
     def new_product(cls, params: dict) -> "Product":
         """Метод-класса для создания экземпляра Product"""
@@ -65,13 +68,19 @@ class Category:
         Category.category_count += 1
         Category.product_count = sum(product.quantity for product in self.__products)
 
+    def __str__(self):
+        count_prods = 0
+        for product in self.__products:
+            count_prods += product.quantity
+        return f"{self.name}, количество продуктов: {count_prods} шт."
+
     @property
     def products(self) -> str:
         """Метод вывода наименований товаров и их количество с ценами"""
-        name_prod = ""
+        prod_str = ""
         for prod in self.__products:
-            name_prod += f"{prod.name}, {prod.price} руб. Остаток: {prod.quantity} шт.\n"
-        return name_prod
+            prod_str += f"{str(prod)}\n"
+        return prod_str
 
     @products.setter
     def products(self, products: list[Product]) -> None:
@@ -104,3 +113,5 @@ if __name__ == "__main__":  # pragma: no cover
 
     print("Группа:", category.name)
     print("В категории:", category.product_count)
+
+    print(Category.products)
