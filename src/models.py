@@ -1,6 +1,8 @@
 # models.py
 """Модуль содержит описание классов объектов"""
 
+from typing import Any, Iterator
+
 
 class Product:
     """Создание объектов - товаров"""
@@ -18,11 +20,14 @@ class Product:
         self.__price = price
         self.quantity = quantity
 
-    def __str__(self):
-        return f"{self.name}, {self.__price} руб. Остаток: {self.quantity} шт."
+    def __str__(self) -> str:
+        return f"{self.name}, {self.__price:.2f} руб. Остаток: {self.quantity} шт."
 
-    def __add__(self, other):  # Полная стоймость товара на складе
-        return (self.__price * self.quantity) + (other.__price * other.quantity)
+    def __add__(self, other: Any) -> Any:  # Полная стоймость товара на складе
+        if isinstance(other, Product):
+            result = (self.__price * self.quantity) + (other.__price * other.quantity)
+            return result
+        raise TypeError("Ожидается другой объект Product")
 
     @classmethod
     def new_product(cls, params: dict) -> "Product":
@@ -71,19 +76,22 @@ class Category:
         Category.category_count += 1
         Category.product_count = sum(product.quantity for product in self.__products)
 
-    def __str__(self):
+    def __str__(self) -> str:
         count_prods = 0
         for product in self.__products:
             count_prods += product.quantity
         return f"{self.name}, количество продуктов: {count_prods} шт."
 
+    def __iter__(self) -> Iterator[Product]:
+        return CategoryIterator(self)
+
     @property
-    def products(self) -> str:
+    def products(self) -> list:
         """Метод вывода наименований товаров и их количество с ценами"""
-        prod_str = ""
+        prod_list = []
         for prod in self.__products:
-            prod_str += f"{str(prod)}\n"
-        return prod_str
+            prod_list.append(str(prod))
+        return prod_list
 
     @products.setter
     def products(self, products: list[Product]) -> None:
@@ -98,8 +106,34 @@ class Category:
         Category.product_count += product.quantity
 
 
+class CategoryIterator:
+    """Итератор перебора продуктов в категории продуктов"""
+
+    # Описание типов данных в классе.
+    category_obj: Category
+
+    def __init__(self, category_obj: Category) -> None:
+        self._category = category_obj
+        self._index = 0
+
+    def __iter__(self) -> Iterator[Product]:
+        return self
+
+    def __next__(self) -> Product:
+        if self._index < len(self._category.products):
+            result: Product = self._category.products[self._index]
+            self._index += 1
+            return result
+        else:
+            raise StopIteration
+
+
 if __name__ == "__main__":  # pragma: no cover
     product1 = Product('Philips 55" QLED 4K', "Фоновая подсветка", 123000.0, 7)
+    product2 = Product("Sony", "Мини c матовым покрытие экрана", 15000.0, 10)
+
+    print(product1)
+    print(product2, "\n")
 
     category = Category(
         "Телевизоры",
@@ -109,12 +143,14 @@ if __name__ == "__main__":  # pragma: no cover
     )
 
     print("Группа:", category.name)
-    print("В категории:", category.product_count)
+    print("В категории:", category.product_count, "\n")
 
-    product2 = Product("Sony", "Мини c матовым покрытие экрана", 15000.0, 10)
     category.add_product(product2)
 
     print("Группа:", category.name)
-    print("В категории:", category.product_count)
+    print("В категории:", category.product_count, "\n")
 
-    print(Category.products)
+    iterator = CategoryIterator(category)
+
+    for product in iterator:
+        print(product)
