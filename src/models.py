@@ -24,7 +24,7 @@ class Product:
         return f"{self.name}, {self.__price:.2f} руб. Остаток: {self.quantity} шт."
 
     def __add__(self, other: Any) -> Any:  # Полная стоймость товара на складе
-        if isinstance(other, Product):
+        if isinstance(other, Product):  # оказывается task_2 выполнен, но не через type()
             result = (self.__price * self.quantity) + (other.__price * other.quantity)
             return result
         raise TypeError("Ожидается другой объект Product")
