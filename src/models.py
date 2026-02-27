@@ -55,6 +55,45 @@ class Product:
             self.__price = price  # Устанавливаем новую цену
 
 
+# Дочерний класс от Product
+class Smartphone(Product):
+
+    # Описание типов данных в классе.
+    name: str
+    description: str
+    price: float
+    quantity: int
+    efficiency: str
+    model: str
+    memory: str
+    color: str
+
+    def __init__(self, name, description, price, quantity, efficiency, model, memory, color) -> None:
+        super().__init__(name, description, price, quantity)
+        self.efficiency = efficiency
+        self.model = model
+        self.memory = memory
+        self.color = color
+
+
+class LawnGrass(Product):
+
+    # Описание типов данных в классе.
+    name: str
+    description: str
+    price: float
+    quantity: int
+    country: str
+    germination_period: str
+    color: str
+
+    def __init__(self, name, description, price, quantity, country, germination_period, color) -> None:
+        super().__init__(name, description, price, quantity)
+        self.country = country
+        self.germination_period = germination_period
+        self.color = color
+
+
 class Category:
     """Создание групп товаров"""
 
