@@ -143,10 +143,10 @@ class Category:
 
     def add_product(self, product: Product) -> None:
         """Публичный метод для добавления продукта в категорию"""
-        if not isinstance(product, Product):
+        if not isinstance(product, (Product, LawnGrass, Smartphone)):
             raise TypeError(
                 f"Нельзя добавить в категорию объект типа {type(product).__name__}. "
-                "Ожидался экземпляр класса Product или его наследник."
+                "Ожидался экземпляр класса Product или его наследник (LawnGrass, Smartphone)."
             )
         self.__products.append(product)
         Category.product_count += product.quantity
