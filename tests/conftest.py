@@ -13,7 +13,7 @@ from src.models import Category, Product
 
 @pytest.fixture
 def fixture_init_prod() -> dict:
-    return {"name": "Toshiba", "description": "Микровалновая печь для дома", "price": 1000, "quantity": 5}
+    return {"name": "Toshiba", "description": "Микровалновая печь для дома", "price": 1000.0, "quantity": 5}
 
 
 @pytest.fixture(autouse=True)
@@ -49,7 +49,7 @@ def fixture_category(fix_diamond_product: Product) -> Category:
     return Category("Украшения", "Драгоценные камни", [fix_diamond_product])
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     project_root = os.path.dirname(os.path.dirname(__file__))
     path_file_json = os.path.join(project_root, "data", "products.json")
     print(path_file_json)
