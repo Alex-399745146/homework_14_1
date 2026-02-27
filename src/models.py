@@ -58,18 +58,29 @@ class Product:
 
 # Дочерний класс от Product
 class Smartphone(Product):
+    """Создание объектов товаров подкласса продуктов"""
 
     # Описание типов данных в классе.
     name: str
     description: str
     price: float
     quantity: int
-    efficiency: str
+    efficiency: float
     model: str
-    memory: str
+    memory: int
     color: str
 
-    def __init__(self, name, description, price, quantity, efficiency, model, memory, color) -> None:
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        price: float,
+        quantity: int,
+        efficiency: float,
+        model: str,
+        memory: int,
+        color: str,
+    ) -> None:
         super().__init__(name, description, price, quantity)
         self.efficiency = efficiency
         self.model = model
@@ -79,6 +90,7 @@ class Smartphone(Product):
 
 # Дочерний класс от Product
 class LawnGrass(Product):
+    """Создание объектов товаров подкласса продуктов"""
 
     # Описание типов данных в классе.
     name: str
@@ -89,7 +101,16 @@ class LawnGrass(Product):
     germination_period: str
     color: str
 
-    def __init__(self, name, description, price, quantity, country, germination_period, color) -> None:
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        price: float,
+        quantity: int,
+        country: str,
+        germination_period: str,
+        color: str,
+    ) -> None:
         super().__init__(name, description, price, quantity)
         self.country = country
         self.germination_period = germination_period
@@ -141,7 +162,7 @@ class Category:
         for prod in products:
             self.__products.append(prod)
 
-    def add_product(self, product: Product) -> None:
+    def add_product(self, product: Any) -> None:
         """Публичный метод для добавления продукта в категорию"""
         if not isinstance(product, (Product, LawnGrass, Smartphone)):
             raise TypeError(
