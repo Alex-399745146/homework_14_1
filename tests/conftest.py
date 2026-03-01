@@ -12,7 +12,37 @@ from src.models import Category, Product
 
 
 @pytest.fixture
+def fixture_init_lawngrass() -> dict:
+    """Фикстура для создания объекта класса"""
+    return {
+        "name": "Клиновидный остролистник",
+        "description": "Стойкий пигмент, без выгорания",
+        "price": 400.0,
+        "quantity": 100,
+        "country": "Голландия",
+        "germination_period": "10 дней",
+        "color": "Александрит",
+    }
+
+
+@pytest.fixture
+def fixture_init_smartphone() -> dict:
+    """Фикстура для создания объекта класса"""
+    return {
+        "name": "Fly",
+        "description": "Раскладной телефон",
+        "price": 15000.0,
+        "quantity": 1,
+        "efficiency": 80.0,
+        "model": "V5000",
+        "memory": 512,
+        "color": "Чёрный",
+    }
+
+
+@pytest.fixture
 def fixture_init_prod() -> dict:
+    """Фикстура для создания объекта класса"""
     return {"name": "Toshiba", "description": "Микровалновая печь для дома", "price": 1000.0, "quantity": 5}
 
 

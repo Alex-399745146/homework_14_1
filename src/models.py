@@ -23,11 +23,12 @@ class Product:
     def __str__(self) -> str:
         return f"{self.name}, {self.__price:.2f} руб. Остаток: {self.quantity} шт."
 
-    def __add__(self, other: Any) -> Any:  # Полная стоймость товара на складе
-        if isinstance(other, Product):
+    def __add__(self, other: Any) -> Any:
+        """Метод подсчёта полной стоймости товара на складе одного типа"""
+        if type(self) is type(other):  # Проверяем точное совпадение типов
             result = (self.__price * self.quantity) + (other.__price * other.quantity)
             return result
-        raise TypeError("Ожидается другой объект Product")
+        raise TypeError(f"Нельзя складывать разные типы товаров {type(self).__name__} и {type(other).__name__}")
 
     @classmethod
     def new_product(cls, params: dict) -> "Product":
@@ -53,6 +54,67 @@ class Product:
                 print("Изменение цены отменено")
         else:
             self.__price = price  # Устанавливаем новую цену
+
+
+# Дочерний класс от Product
+class Smartphone(Product):
+    """Создание объектов товаров подкласса продуктов"""
+
+    # Описание типов данных в классе.
+    name: str
+    description: str
+    price: float
+    quantity: int
+    efficiency: float
+    model: str
+    memory: int
+    color: str
+
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        price: float,
+        quantity: int,
+        efficiency: float,
+        model: str,
+        memory: int,
+        color: str,
+    ) -> None:
+        super().__init__(name, description, price, quantity)
+        self.efficiency = efficiency
+        self.model = model
+        self.memory = memory
+        self.color = color
+
+
+# Дочерний класс от Product
+class LawnGrass(Product):
+    """Создание объектов товаров подкласса продуктов"""
+
+    # Описание типов данных в классе.
+    name: str
+    description: str
+    price: float
+    quantity: int
+    country: str
+    germination_period: str
+    color: str
+
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        price: float,
+        quantity: int,
+        country: str,
+        germination_period: str,
+        color: str,
+    ) -> None:
+        super().__init__(name, description, price, quantity)
+        self.country = country
+        self.germination_period = germination_period
+        self.color = color
 
 
 class Category:
@@ -95,13 +157,18 @@ class Category:
 
     @products.setter
     def products(self, products: list[Product]) -> None:
-        """Метод создания атрибута для экземпляров класса"""
+        """Метод сеттер создания атрибута для экземпляров класса"""
         self.__products = []
         for prod in products:
             self.__products.append(prod)
 
-    def add_product(self, product: Product) -> None:
+    def add_product(self, product: Any) -> None:
         """Публичный метод для добавления продукта в категорию"""
+        if not isinstance(product, (Product, LawnGrass, Smartphone)):
+            raise TypeError(
+                f"Нельзя добавить в категорию объект типа {type(product).__name__}. "
+                "Ожидался экземпляр класса Product или его наследник (LawnGrass, Smartphone)."
+            )
         self.__products.append(product)
         Category.product_count += product.quantity
 

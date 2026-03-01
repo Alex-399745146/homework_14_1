@@ -1,7 +1,7 @@
 # test_models.py
 """Модуль с кейсами проверок работы классов"""
 
-from src.models import Category, Product
+from src.models import Category, LawnGrass, Product, Smartphone
 
 
 def test_init_product(fix_diamond_product: Product, fixture_init_prod: dict) -> None:
@@ -53,3 +53,47 @@ def test_init_category(fixture_category: Category, fix_diamond_product: Product)
     assert isinstance(fixture_category.products, list)
     assert isinstance(fixture_category.category_count, int)
     assert isinstance(fixture_category.product_count, int)
+
+
+def test_init_smartphone(fixture_init_smartphone: dict) -> None:
+    test_obj = Smartphone(**fixture_init_smartphone)
+
+    assert test_obj.name == "Fly"
+    assert test_obj.description == "Раскладной телефон"
+    assert test_obj.price == 15000.0
+    assert test_obj.quantity == 1
+    assert test_obj.efficiency == 80.0
+    assert test_obj.model == "V5000"
+    assert test_obj.memory == 512
+    assert test_obj.color == "Чёрный"
+
+    # Проверка типа данных
+    assert isinstance(test_obj.name, str)
+    assert isinstance(test_obj.description, str)
+    assert isinstance(test_obj.price, float)
+    assert isinstance(test_obj.quantity, int)
+    assert isinstance(test_obj.efficiency, float)
+    assert isinstance(test_obj.model, str)
+    assert isinstance(test_obj.memory, int)
+    assert isinstance(test_obj.color, str)
+
+
+def test_init_lawngrass(fixture_init_lawngrass: dict) -> None:
+    test_obj = LawnGrass(**fixture_init_lawngrass)
+
+    assert test_obj.name == "Клиновидный остролистник"
+    assert test_obj.description == "Стойкий пигмент, без выгорания"
+    assert test_obj.price == 400.0
+    assert test_obj.quantity == 100
+    assert test_obj.country == "Голландия"
+    assert test_obj.germination_period == "10 дней"
+    assert test_obj.color == "Александрит"
+
+    # Проверка типа данных
+    assert isinstance(test_obj.name, str)
+    assert isinstance(test_obj.description, str)
+    assert isinstance(test_obj.price, float)
+    assert isinstance(test_obj.quantity, int)
+    assert isinstance(test_obj.country, str)
+    assert isinstance(test_obj.germination_period, str)
+    assert isinstance(test_obj.color, str)
