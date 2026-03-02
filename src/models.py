@@ -3,16 +3,18 @@
 
 from typing import Any, Iterator
 from src.abstract_models import BaseProduct
+from src.mixin_models import PrintMixin
 
 
 # Дочерний класс от BaseProduct
-class Product(BaseProduct):
+class Product(BaseProduct, PrintMixin):
     """Создание объектов - товаров"""
     price: float
 
     def __init__(self, name: str, description: str, price: float, quantity: int) -> None:
         super().__init__(name, description, price, quantity)  # Передаём все 4 аргумента чтоб не править main
         self.__price = price  # Инициализируем приватный атрибут здесь
+        print(repr(self))  # Вывод данных описанных в миксине
 
     def __str__(self) -> str:
         """Метод вывода информации определенного формата с содержанием имени товара, цены, единиц на складе"""
@@ -40,20 +42,20 @@ class Product(BaseProduct):
         """Метод getter цены товара"""
         return self.__price
 
-    # @price.setter
-    # def price(self, price: float) -> None:
-    #     """Метод setter цены товара"""
-    #     if price <= 0:
-    #         print("Цена не должна быть нулевая или отрицательная")
-    #     elif price < self.BaseProduct__price:
-    #         response = input("Цену товара снизить?(y/n)")
-    #         if response.lower() == "y":
-    #             print("Цена товара снижена!!!")
-    #             self.BaseProduct__price = price
-    #         else:
-    #             print("Изменение цены отменено")
-    #     else:
-    #         self.BaseProduct__price = price  # Устанавливаем новую цену
+    @price.setter
+    def price(self, price: float) -> None:
+        """Метод setter цены товара"""
+        if price <= 0:
+            print("Цена не должна быть нулевая или отрицательная")
+        elif price < self.__price:
+            response = input("Цену товара снизить?(y/n)")
+            if response.lower() == "y":
+                print("Цена товара снижена!!!")
+                self.__price = price
+            else:
+                print("Изменение цены отменено")
+        else:
+            self.__price = price  # Устанавливаем новую цену
 
 
 # Дочерний класс от Product
