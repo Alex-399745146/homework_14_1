@@ -2,6 +2,7 @@
 """Модуль содержит описание классов объектов"""
 
 from typing import Any, Iterator
+
 from src.abstract_models import BaseProduct
 from src.mixin_models import PrintMixin
 
@@ -9,12 +10,11 @@ from src.mixin_models import PrintMixin
 # Дочерний класс от BaseProduct
 class Product(BaseProduct, PrintMixin):
     """Создание объектов - товаров"""
-    price: float
 
     def __init__(self, name: str, description: str, price: float, quantity: int) -> None:
-        super().__init__(name, description, price, quantity)  # Передаём все 4 аргумента чтоб не править main
+        super().__init__(name, description, quantity)  # Передаём все 4 аргумента чтоб не править main
         self.__price = price  # Инициализируем приватный атрибут здесь
-        print(repr(self))  # Вывод данных описанных в миксине
+        print(repr(self))  # Переопределение функции print для вывода данных
 
     def __str__(self) -> str:
         """Метод вывода информации определенного формата с содержанием имени товара, цены, единиц на складе"""
@@ -28,13 +28,10 @@ class Product(BaseProduct, PrintMixin):
         raise TypeError(f"Нельзя складывать разные типы товаров {type(self).__name__} и {type(other).__name__}")
 
     @classmethod
-    def new_product(cls, params: dict) -> "Product":
+    def new_product(cls, params: dict) -> Any:
         """Метод-класса для создания экземпляра Product"""
         return cls(
-            name=params["name"],
-            description=params["description"],
-            price=params["price"],
-            quantity=params["quantity"]
+            name=params["name"], description=params["description"], price=params["price"], quantity=params["quantity"]
         )
 
     @property
@@ -43,7 +40,7 @@ class Product(BaseProduct, PrintMixin):
         return self.__price
 
     @price.setter
-    def price(self, price: float) -> None:
+    def price(self, price: float) -> Any:
         """Метод setter цены товара"""
         if price <= 0:
             print("Цена не должна быть нулевая или отрицательная")
