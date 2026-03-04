@@ -3,24 +3,21 @@
 
 from typing import Any, Iterator
 
+from src.abstract_models import BaseProduct
+from src.mixin_models import PrintMixin
 
-class Product:
+
+# Дочерний класс от BaseProduct
+class Product(BaseProduct, PrintMixin):
     """Создание объектов - товаров"""
 
-    # Описание типов данных в классе.
-    name: str
-    description: str
-    __price: float  # Приватный атрибут
-    quantity: int
-
-    # Конструктор класса с атрибутами объектов.
     def __init__(self, name: str, description: str, price: float, quantity: int) -> None:
-        self.name = name
-        self.description = description
-        self.__price = price
-        self.quantity = quantity
+        super().__init__(name, description, quantity)  # Передаём все 4 аргумента чтоб не править main
+        self.__price = price  # Инициализируем приватный атрибут здесь
+        print(repr(self))  # Переопределение функции print для вывода данных
 
     def __str__(self) -> str:
+        """Метод вывода информации определенного формата с содержанием имени товара, цены, единиц на складе"""
         return f"{self.name}, {self.__price:.2f} руб. Остаток: {self.quantity} шт."
 
     def __add__(self, other: Any) -> Any:
@@ -31,7 +28,7 @@ class Product:
         raise TypeError(f"Нельзя складывать разные типы товаров {type(self).__name__} и {type(other).__name__}")
 
     @classmethod
-    def new_product(cls, params: dict) -> "Product":
+    def new_product(cls, params: dict) -> Any:
         """Метод-класса для создания экземпляра Product"""
         return cls(
             name=params["name"], description=params["description"], price=params["price"], quantity=params["quantity"]
@@ -39,10 +36,12 @@ class Product:
 
     @property
     def price(self) -> float:
+        """Метод getter цены товара"""
         return self.__price
 
     @price.setter
-    def price(self, price: float) -> None:
+    def price(self, price: float) -> Any:
+        """Метод setter цены товара"""
         if price <= 0:
             print("Цена не должна быть нулевая или отрицательная")
         elif price < self.__price:

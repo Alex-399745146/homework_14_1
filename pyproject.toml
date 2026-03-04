@@ -36,8 +36,12 @@ warn_return_any = true
 check_untyped_defs = false
 strict = false
 warn_unreachable = false
-exclude = '.venv'
+exclude = ['.venv', 'tests/test_abstract_models.py']
 
+
+[[tool.mypy.overrides]]
+module = ['tests.*'] # для какого модуля
+allow_untyped_defs = true # переопределение настройки
 
 [tool.black]
 line-length = 119
