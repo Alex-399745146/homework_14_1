@@ -12,9 +12,13 @@ class Product(BaseProduct, PrintMixin):
     """Создание объектов - товаров"""
 
     def __init__(self, name: str, description: str, price: float, quantity: int) -> None:
-        super().__init__(name, description, quantity)  # Передаём все 4 аргумента чтоб не править main
-        self.__price = price  # Инициализируем приватный атрибут здесь
-        print(repr(self))  # Переопределение функции print для вывода данных
+        super().__init__(name, description, quantity)
+        self.__price = price
+        print(repr(self))
+
+        # После инициализации 4х атрибутов проверяем - quantity
+        if self.quantity <= 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
 
     def __str__(self) -> str:
         """Метод вывода информации определенного формата с содержанием имени товара, цены, единиц на складе"""
