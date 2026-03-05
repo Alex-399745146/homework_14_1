@@ -161,7 +161,7 @@ class Category:
     @products.setter
     def products(self, products: list[Product]) -> None:
         """Метод сеттер создания атрибута для экземпляров класса"""
-        self.__products = []
+        self.__products = products[:]  # Копируем старый список чтобы не затирать уже внесенные товары
         for prod in products:
             self.__products.append(prod)
 
@@ -175,6 +175,14 @@ class Category:
         self.__products.append(product)
         Category.product_count += product.quantity
 
+    def middle_price(self) -> float:
+        """Подсчитывает средний ценник всех товаров"""
+        try:
+            total_quantity = sum(product.quantity for product in self.__products)
+            return total_quantity / len(self.__products)
+
+        except ZeroDivisionError:
+            return 0.0
 
 class CategoryIterator:
     """Итератор перебора продуктов в категории продуктов"""
