@@ -175,14 +175,15 @@ class Category:
         self.__products.append(product)
         Category.product_count += product.quantity
 
-    def middle_price(self) -> float:
+    def middle_price(self) -> Any:
         """Подсчитывает средний ценник всех товаров"""
         try:
             total_quantity = sum(product.quantity for product in self.__products)
             return total_quantity / len(self.__products)
 
         except ZeroDivisionError:
-            return 0.0
+            return 0
+
 
 class CategoryIterator:
     """Итератор перебора продуктов в категории продуктов"""
