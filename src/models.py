@@ -12,9 +12,13 @@ class Product(BaseProduct, PrintMixin):
     """Создание объектов - товаров"""
 
     def __init__(self, name: str, description: str, price: float, quantity: int) -> None:
-        super().__init__(name, description, quantity)  # Передаём все 4 аргумента чтоб не править main
-        self.__price = price  # Инициализируем приватный атрибут здесь
-        print(repr(self))  # Переопределение функции print для вывода данных
+        super().__init__(name, description, quantity)
+        self.__price = price
+        print(repr(self))
+
+        # После инициализации 4х атрибутов проверяем - quantity
+        if self.quantity <= 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
 
     def __str__(self) -> str:
         """Метод вывода информации определенного формата с содержанием имени товара, цены, единиц на складе"""
@@ -157,7 +161,7 @@ class Category:
     @products.setter
     def products(self, products: list[Product]) -> None:
         """Метод сеттер создания атрибута для экземпляров класса"""
-        self.__products = []
+        self.__products = products[:]  # Копируем старый список чтобы не затирать уже внесенные товары
         for prod in products:
             self.__products.append(prod)
 
@@ -170,6 +174,15 @@ class Category:
             )
         self.__products.append(product)
         Category.product_count += product.quantity
+
+    def middle_price(self) -> Any:
+        """Подсчитывает средний ценник всех товаров"""
+        try:
+            total_quantity = sum(product.quantity for product in self.__products)
+            return total_quantity / len(self.__products)
+
+        except ZeroDivisionError:
+            return 0
 
 
 class CategoryIterator:

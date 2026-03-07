@@ -43,9 +43,13 @@ def test_init_category(fixture_category: Category, fix_diamond_product: Product)
     assert fixture_category.product_count == 1
 
     test_obj = Category("Украшения", "Драгоценные камни", [])
+
+    assert test_obj.middle_price() == 0
+
     test_obj.add_product(fix_diamond_product)
 
     assert str(test_obj) == "Украшения, количество продуктов: 1 шт."
+    assert test_obj.middle_price() == 1
 
     # Проверка типа данных
     assert isinstance(fixture_category.name, str)
@@ -56,6 +60,7 @@ def test_init_category(fixture_category: Category, fix_diamond_product: Product)
 
 
 def test_init_smartphone(fixture_init_smartphone: dict) -> None:
+    """Проверка создания объектов смартфоны"""
     test_obj = Smartphone(**fixture_init_smartphone)
 
     assert test_obj.name == "Fly"
